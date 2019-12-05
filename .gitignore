@@ -1,0 +1,9 @@
+*.iml
+*.ipr
+*.iws
+videos
+**/devel.js
+.idea/**
+package-lock.json
+node_modules
+
