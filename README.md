@@ -50,6 +50,7 @@ Configure a node.js runtime configuration with
 
  - F1: can fill in a valid registration with no validation errors
  - F2: validation flags all invalid data as expected
+ - F3: can move on to submit page with valid data
 
 ### Submit Page
 

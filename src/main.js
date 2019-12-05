@@ -64,6 +64,18 @@ test('F2: validation flags all invalid data', async t => {
     await f.verifyValidationStateAllInvalid();
 });
 
+test('F3: can move on to submit page with valid data', async t => {
+    const p = new LandingPage(t);
+    await p.visit(pageUrl);
+    await p.submit();
+    const f = p.toFormPage();
+
+    await TestData.fillValidRegistration(f);
+    await f.verifyValidationStateAllValid();
+    await f.submit();
+    const s = f.toSubmitPage();
+});
+
 // TODO test country-badge auto fill logic
 
 // TODO test deselect flags/options/packages logic

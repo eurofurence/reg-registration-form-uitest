@@ -288,7 +288,7 @@ export class FormPage {
 
     async submit() {
         await this.t
-            .expect(this.navs.submitButton.getAttribute('class')).contains('active')
+            .expect(this.navs.submitButton.getAttribute('class')).notContains('disabled')
             .click(this.navs.submitButton)
             .expect(this.getLocation()).contains('/submit.html');
     }
