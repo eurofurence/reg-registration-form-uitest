@@ -1,4 +1,4 @@
-# UI Tests for the Eurofurence Hotelbooking App
+# UI Tests for the Eurofurence Registration App
 
 Implemented using [testcafe](https://github.com/DevExpress/testcafe) in JavaScript (ECMAScript6 to be precise).
 
