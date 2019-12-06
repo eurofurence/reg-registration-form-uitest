@@ -301,14 +301,177 @@ export class FormPage {
 export class SubmitPage {
     constructor(t) {
         this.t = t;
+
+        this.getLocation = ClientFunction(() => document.location.href);
+
+        this.navs = {
+            submitButton: Selector('#submit-button'),
+        };
+        this.labels = {
+            textCountdownLong: Selector( '#countdown-text-long'),
+            textCountdownShort: Selector( '#countdown-text-short'),
+            textCountdownError: Selector( '#countdown-error'),
+            countdown: Selector( '#countdown'),
+            validationError: Selector( '#validation-error'),
+        };
+
+        this.fields = {
+            nickname: Selector('#nickname-field'),
+            firstname: Selector('#first-name-field'),
+            lastname: Selector('#last-name-field'),
+            street: Selector('#street-field'),
+            zip: Selector('#zip-field'),
+            city: Selector('#city-field'),
+            country: Selector('#country-field'),
+            countryBadge: Selector('#country-badge-field'),
+            state: Selector('#state-field'),
+            email: Selector('#email-field'),
+            phone: Selector('#phone-field'),
+            birthday: Selector('#birthday-field'),
+            gender: {
+                "male": Selector('#gender-field-male'),
+                "female": Selector('#gender-field-female'),
+                "other": Selector('#gender-field-other'),
+                "notprovided": Selector('#gender-field-notprovided'),
+            },
+            telegram: Selector('#telegram-field'),
+            packages: Selector('#packages'),
+            options: Selector('#options'), // includes flags
+            tshirtsize: Selector('#tshirt-size-field'),
+            usercomments: Selector('#user-comments-field'),
+            confirm: Selector('#confirm-checkbox'),
+        };
     }
 
-    /*
+    async verifyNickname(value) {
+        await this.t.expect(this.fields.nickname.innerText).eql(value);
+    }
+
+    async verifyFirstName(value) {
+        await this.t.expect(this.fields.firstname.innerText).eql(value);
+    }
+
+    async verifyLastName(value) {
+        await this.t.expect(this.fields.lastname.innerText).eql(value);
+    }
+
+    async verifyStreet(value) {
+        await this.t.expect(this.fields.street.innerText).eql(value);
+    }
+
+    async verifyZip(value) {
+        await this.t.expect(this.fields.zip.innerText).eql(value);
+    }
+
+    async verifyCity(value) {
+        await this.t.expect(this.fields.city.innerText).eql(value);
+    }
+
+    async verifyCountry(value) {
+        await this.t.expect(this.fields.country.innerText).eql(value);
+    }
+
+    async verifyCountryBadge(value) {
+        await this.t.expect(this.fields.countryBadge.innerText).eql(value);
+    }
+
+    async verifyState(value) {
+        await this.t.expect(this.fields.state.innerText).eql(value);
+    }
+
+    async verifyEmail(value) {
+        await this.t.expect(this.fields.email.innerText).eql(value);
+    }
+
+    async verifyPhone(value) {
+        await this.t.expect(this.fields.phone.innerText).eql(value);
+    }
+
+    async verifyBirthday(value) {
+        await this.t.expect(this.fields.birthday.innerText).eql(value);
+    }
+
+    async _verifyGender(code, expectedExists) {
+        if (expectedExists) {
+            await this.t.expect(this.fields.gender[code].exists).ok();
+        } else {
+            await this.t.expect(this.fields.gender[code].exists).notOk();
+        }
+    }
+
+    async verifyGender(code) {
+        await this._verifyGender("male", code === "male");
+        await this._verifyGender("female", code === "female");
+        await this._verifyGender("other", code === "other");
+        await this._verifyGender("notprovided", code === "notprovided");
+    }
+
+    async verifyTelegram(value) {
+        await this.t.expect(this.fields.telegram.innerText).eql(value);
+    }
+
+    async verifyPackages(valueList, notValueList) {
+        var i;
+        for (i = 0; i < valueList; i++) {
+            await this.t.expect(this.fields.packages.innerHTML).contains(valueList[i]);
+        }
+        for (i = 0; i < notValueList; i++) {
+            await this.t.expect(this.fields.packages.innerHTML).notContains(notValueList[i]);
+        }
+    }
+
+    async verifyOptions(valueList, notValueList) {
+        var i;
+        for (i = 0; i < valueList; i++) {
+            await this.t.expect(this.fields.options.innerHTML).contains(valueList[i]);
+        }
+        for (i = 0; i < notValueList; i++) {
+            await this.t.expect(this.fields.options.innerHTML).notContains(notValueList[i]);
+        }
+    }
+
+    async verifyTshirtSize(value) {
+        await this.t.expect(this.fields.tshirtsize.innerText).eql(value);
+    }
+
+    async verifyComments(value) {
+        await this.t.expect(this.fields.usercomments.innerText).eql(value);
+    }
 
     async acceptDisclaimer() {
         await this.t
-            .click(this.fields.disclaimer)
-            .expect(this.fields.disclaimer.checked).eql(true);
+            .click(this.fields.confirm)
+            .expect(this.fields.confirm.checked).eql(true);
     }
-     */
+
+    async verifyLongCountdown() {
+        await this.t
+            .expect(this.labels.textCountdownError.getAttribute('class')).contains('hidden')
+            .expect(this.labels.textCountdownShort.getAttribute('class')).contains('hidden')
+            .expect(this.labels.textCountdownLong.getAttribute('class')).eql(undefined);
+    }
+
+    async verifyShortCountdown() {
+        await this.t
+            .expect(this.labels.textCountdownError.getAttribute('class')).contains('hidden')
+            .expect(this.labels.textCountdownShort.getAttribute('class')).eql(undefined)
+            .expect(this.labels.textCountdownLong.getAttribute('class')).contains('hidden');
+    }
+
+    async verifyNoCountdown() {
+        await this.t
+            .expect(this.labels.textCountdownError.exists).notOk()
+            .expect(this.labels.textCountdownShort.exists).notOk()
+            .expect(this.labels.textCountdownLong.exists).notOk();
+    }
+
+    async verifySubmitDisabled() {
+        await this.t
+            .expect(this.navs.submitButton.getAttribute('disabled')).notEql(undefined);
+    }
+
+    async verifySubmitEnabled() {
+        await this.t
+            .expect(this.navs.submitButton.getAttribute('disabled')).eql(undefined);
+    }
 }

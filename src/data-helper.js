@@ -27,6 +27,35 @@ export class TestData {
         await fp.setComments('This is a comment. Yay!');
     }
 
+    static async verifyValidRegistration(sp) {
+        await sp.verifyNickname('AngelServal');
+        await sp.verifyFirstName('Katrina');
+        await sp.verifyLastName('Müller');
+        await sp.verifyStreet('Automatisierte Teststraße 42 äöüÄÖÜ');
+        await sp.verifyZip('4LK-8N0');
+        await sp.verifyCity('München');
+        await sp.verifyCountry('Germany');
+        await sp.verifyCountryBadge('Germany');
+        await sp.verifyState('Mecklenburg-Vorpommern');
+        await sp.verifyEmail('jsquirrel_github_9a6d@packetloss.de');
+        await sp.verifyPhone('+49 12345 123456789');
+        await sp.verifyBirthday('8/19/2002');
+        await sp.verifyGender('female');
+        await sp.verifyTelegram('@Stickers');
+        await sp.verifyPackages(["Entrance Fee", "Stage Ticket", "Sponsor Upgrade"], ["Supersponsor Upgrade"]);
+        await sp.verifyOptions([
+            "Legal Name is Confidential",
+            "Member of Eurofurence e.V.",
+            "Wheelchair",
+            "Artist",
+            "Animator",
+            "Musician",
+            "Fursuiter"
+        ], []);
+        await sp.verifyTshirtSize('XXXL');
+        await sp.verifyComments('This is a comment. Yay!');
+    }
+
     static async fillInvalidRegistration(fp) {
         await fp.setNickname('].-o-.[ エンジェル サーバル');
         await fp.setFirstName('');

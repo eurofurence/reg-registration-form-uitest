@@ -1,7 +1,7 @@
 import {LandingPage, FormPage, SubmitPage} from "./page-model";
 import {TestData} from "./data-helper";
 
-var pageUrl = 'http://localhost:63342/reg-registration-form/';
+var pageUrl = 'http://localhost:63343/reg-registration-form/';
 var pageUrlShortBefore = pageUrl + '?currentTime=2019-11-28T17:30:00-01:00';
 var pageUrlLongBefore = pageUrl + '?currentTime=2019-11-28T16:30:00-01:00';
 
@@ -76,13 +76,56 @@ test('F3: can move on to submit page with valid data', async t => {
     const s = f.toSubmitPage();
 });
 
-// TODO test country-badge auto fill logic
+// tests for submit page
 
-// TODO test deselect flags/options/packages logic
+test('S1: submit page shows long countdown when appropriate', async t => {
+    const p = new LandingPage(t);
+    await p.visit(pageUrlLongBefore);
+    await p.submit();
+    const f = p.toFormPage();
 
-// TODO FIX validation on select drop down occurs only when leaving focus
+    await TestData.fillValidRegistration(f);
+    await f.verifyValidationStateAllValid();
+    await f.submit();
+    const s = f.toSubmitPage();
 
-// TODO FIX email only checks for non-empty field?? Regsys does more, right?
+    await TestData.verifyValidRegistration(s);
+    await s.acceptDisclaimer();
+    await s.verifyLongCountdown();
+    await s.verifySubmitDisabled();
+});
 
-// TODO FIX can deselect Entrance Fee and Stage Ticket, Sponsor is on by default
+test('S2: submit page shows short countdown when appropriate', async t => {
+    const p = new LandingPage(t);
+    await p.visit(pageUrlShortBefore);
+    await p.submit();
+    const f = p.toFormPage();
+
+    await TestData.fillValidRegistration(f);
+    await f.verifyValidationStateAllValid();
+    await f.submit();
+    const s = f.toSubmitPage();
+
+    await TestData.verifyValidRegistration(s);
+    await s.acceptDisclaimer();
+    await s.verifyShortCountdown();
+    await s.verifySubmitDisabled();
+});
+
+test('S3: submit page works and allows submit after go-live', async t => {
+    const p = new LandingPage(t);
+    await p.visit(pageUrl);
+    await p.submit();
+    const f = p.toFormPage();
+
+    await TestData.fillValidRegistration(f);
+    await f.verifyValidationStateAllValid();
+    await f.submit();
+    const s = f.toSubmitPage();
+
+    await TestData.verifyValidRegistration(s);
+    await s.acceptDisclaimer();
+    await s.verifyNoCountdown();
+    await s.verifySubmitEnabled();
+});
 
