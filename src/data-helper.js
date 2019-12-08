@@ -19,7 +19,7 @@ export class TestData {
         await fp.clickFlag('hc', true);
         await fp.setTelegram('@Stickers');
         await fp.clickPackage('sponsor', true);
-        await fp.setTshirtSize('XXXL','XXXL');
+        await fp.setTshirtSize('3XL (Lady Fit)','w3XL');
         await fp.clickOption('art', true);
         await fp.clickOption('anim', true);
         await fp.clickOption('music', true);
@@ -52,7 +52,7 @@ export class TestData {
             "Musician",
             "Fursuiter"
         ], []);
-        await sp.verifyTshirtSize('XXXL');
+        await sp.verifyTshirtSize('3XL (Lady Fit)');
         await sp.verifyComments('This is a comment. Yay!');
     }
 

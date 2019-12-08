@@ -5,7 +5,7 @@ var pageUrl = 'http://localhost:63343/reg-registration-form/';
 var pageUrlShortBefore = pageUrl + '?currentTime=2019-11-28T17:30:00-01:00';
 var pageUrlLongBefore = pageUrl + '?currentTime=2019-11-28T16:30:00-01:00';
 
-fixture `Getting Started`
+fixture `Registration Form Tests`
     .page('about:blank');
 
 // tests for the landing page
