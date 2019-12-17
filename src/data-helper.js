@@ -72,8 +72,8 @@ export class TestData {
         await fp.setBirthday('2002-08-20');
         await fp.setGender("Don't wish to say", 'notprovided');
         await fp.setTelegram("NoAtStickers");
-        await fp.clickPackage("attendance", false);
-        await fp.clickPackage("stage", false);
+        // await fp.clickPackage("attendance", false);
+        // await fp.clickPackage("stage", false);
         await fp.clickPackage("sponsor", true);
         await fp.clickPackage("sponsor2", true);
 
