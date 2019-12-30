@@ -1,9 +1,20 @@
 import {LandingPage, FormPage, SubmitPage} from "./page-model";
 import {TestData} from "./data-helper";
 
+// ----------------------------------------------------------------------------------------------------
+//  ui tests for initial registration ui
+// ----------------------------------------------------------------------------------------------------
+//   these tests do not actually submit registrations, so they can be safely run against production
+
+// (you will need to configure the pageUrl and the timestamps in the next few lines)
+
 var pageUrl = 'http://localhost:63343/reg-registration-form/';
-var pageUrlShortBefore = pageUrl + '?currentTime=2019-11-28T17:30:00-01:00';
-var pageUrlLongBefore = pageUrl + '?currentTime=2019-11-28T16:30:00-01:00';
+
+// adjust this to the configured go live time. Note that we are using timezone -1 so we don't have to urlencode
+// the + sign, so these times are relative to 2 hours BEFORE the configured go live time.
+var pageUrlAfter = pageUrl + '?currentTime=2019-12-30T18:00:00-01:00';
+var pageUrlShortBefore = pageUrl + '?currentTime=2019-12-30T17:30:00-01:00';
+var pageUrlLongBefore = pageUrl + '?currentTime=2019-12-30T16:30:00-01:00';
 
 fixture `Registration Form Tests`
     .page('about:blank');
@@ -24,7 +35,7 @@ test('L2: main URL shows landing page with short countdown', async t => {
 
 test('L3: main URL shows landing page after go-live', async t => {
     const p = new LandingPage(t);
-    await p.visit(pageUrl);
+    await p.visit(pageUrlAfter);
     await p.checkContentsAfter();
 });
 
@@ -37,7 +48,7 @@ test('L4: can navigate to form page before go-live', async t => {
 
 test('L5: can navigate to form after go-live', async t => {
     const p = new LandingPage(t);
-    await p.visit(pageUrl);
+    await p.visit(pageUrlAfter);
     await p.submit();
     const f = p.toFormPage();
 });
@@ -114,7 +125,7 @@ test('S2: submit page shows short countdown when appropriate', async t => {
 
 test('S3: submit page works and allows submit after go-live', async t => {
     const p = new LandingPage(t);
-    await p.visit(pageUrl);
+    await p.visit(pageUrlAfter);
     await p.submit();
     const f = p.toFormPage();
 
