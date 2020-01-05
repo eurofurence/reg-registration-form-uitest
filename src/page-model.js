@@ -275,6 +275,10 @@ export class FormPage {
         }
     }
 
+    async verifyNicknameValidationState(isValid) {
+        this._verifyValidationState(this.fields['nickname'], isValid);
+    }
+
     async _verifyValidationState(field, isValid) {
         var errorColor = 'rgb(255';
         if (isValid) {

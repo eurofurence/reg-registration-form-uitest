@@ -12,9 +12,9 @@ var pageUrl = 'http://localhost:63343/reg-registration-form/';
 
 // adjust this to the configured go live time. Note that we are using timezone -1 so we don't have to urlencode
 // the + sign, so these times are relative to 2 hours BEFORE the configured go live time.
-var pageUrlAfter = pageUrl + '?currentTime=2019-12-30T18:00:00-01:00';
-var pageUrlShortBefore = pageUrl + '?currentTime=2019-12-30T17:30:00-01:00';
-var pageUrlLongBefore = pageUrl + '?currentTime=2019-12-30T16:30:00-01:00';
+var pageUrlAfter = pageUrl + '?currentTime=2020-01-04T18:00:00-01:00';
+var pageUrlShortBefore = pageUrl + '?currentTime=2020-01-04T17:30:00-01:00';
+var pageUrlLongBefore = pageUrl + '?currentTime=2020-01-04T16:30:00-01:00';
 
 fixture `Registration Form Tests`
     .page('about:blank');
@@ -85,6 +85,72 @@ test('F3: can move on to submit page with valid data', async t => {
     await f.verifyValidationStateAllValid();
     await f.submit();
     const s = f.toSubmitPage();
+});
+
+test('F4: validation flags nicknames correctly', async t => {
+    const p = new LandingPage(t);
+    await p.visit(pageUrl);
+    await p.submit();
+    const f = p.toFormPage();
+
+    await f.setNickname(TestData.invalidNickname('too short'));
+    await f.verifyNicknameValidationState(false);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.invalidNickname('too long'));
+    await f.verifyNicknameValidationState(false);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.invalidNickname('too cryptic'));
+    await f.verifyNicknameValidationState(false);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.invalidNickname('too many specials'));
+    await f.verifyNicknameValidationState(false);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.invalidNickname('too many symbols'));
+    await f.verifyNicknameValidationState(false);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.validNickname('long'));
+    await f.verifyNicknameValidationState(true);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.validNickname('minimal'));
+    await f.verifyNicknameValidationState(true);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.validNickname('..cc'));
+    await f.verifyNicknameValidationState(true);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.validNickname('.c.c'));
+    await f.verifyNicknameValidationState(true);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.validNickname('c..c'));
+    await f.verifyNicknameValidationState(true);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.validNickname('c.c.'));
+    await f.verifyNicknameValidationState(true);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.validNickname('cc..'));
+    await f.verifyNicknameValidationState(true);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.validNickname('.cc'));
+    await f.verifyNicknameValidationState(true);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.validNickname('c.c'));
+    await f.verifyNicknameValidationState(true);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.validNickname('cc.'));
+    await f.verifyNicknameValidationState(true);
 });
 
 // tests for submit page

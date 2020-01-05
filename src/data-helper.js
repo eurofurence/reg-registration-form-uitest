@@ -57,7 +57,7 @@ export class TestData {
     }
 
     static async fillInvalidRegistration(fp) {
-        await fp.setNickname('].-o-.[ エンジェル サーバル');
+        await fp.setNickname(TestData.invalidNickname('default'));
         await fp.setFirstName('');
         await fp.setLastName('');
         await fp.setStreet('');
@@ -79,5 +79,49 @@ export class TestData {
 
         // TODO validation only occurs when leaving field focus right now - remove me when fixed
         await fp.setZip('');
+    }
+
+    static invalidNickname(desc) {
+        switch(desc) {
+            case 'too short':
+                return "i";
+            case 'too long':
+                return "this is a long nick should be flagged because it is simply too long to be printable";
+            case 'too cryptic':
+                return "%$@#";
+            case 'too many specials':
+                return "are ジ we ン there ル yet?";
+            case 'too many symbols':
+                return "are _ we % yet?";
+            default:
+                return '].-o-.[ エンジェル サーバル';
+        }
+    }
+
+    static validNickname(desc) {
+        switch (desc) {
+            case 'long':
+                return 'The quick red Squirrel w1th 33 many Spaces and Numbers 87 so l33t';
+            case 'minimal':
+                return 'io';
+            case '..cc':
+                return '栗鼠io';
+            case '.c.c':
+                return '栗i鼠o';
+            case 'c..c':
+                return 'i栗鼠o';
+            case 'c.c.':
+                return 'i栗o鼠';
+            case 'cc..':
+                return 'io栗鼠';
+            case '.cc':
+                return '栗io';
+            case 'c.c':
+                return 'i栗o';
+            case 'cc.':
+                return 'io栗';
+            default:
+                return 'AngelServal';
+        }
     }
 }
