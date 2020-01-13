@@ -39,7 +39,7 @@ export class TestData {
         await sp.verifyState('Mecklenburg-Vorpommern');
         await sp.verifyEmail('jsquirrel_github_9a6d@packetloss.de');
         await sp.verifyPhone('+49 12345 123456789');
-        await sp.verifyBirthday('8/19/2002');
+        await sp.verifyBirthday('08/19/2002');
         await sp.verifyGender('female');
         await sp.verifyTelegram('@Stickers');
         await sp.verifyPackages(["Entrance Fee", "Stage Ticket", "Sponsor Upgrade"], ["Supersponsor Upgrade"]);
@@ -83,8 +83,6 @@ export class TestData {
 
     static invalidNickname(desc) {
         switch(desc) {
-            case 'too short':
-                return "i";
             case 'too long':
                 return "this is a long nick should be flagged because it is simply too long to be printable";
             case 'too cryptic':
@@ -103,7 +101,7 @@ export class TestData {
             case 'long':
                 return 'The quick red Squirrel w1th 33 many Spaces and Numbers 87 so l33t';
             case 'minimal':
-                return 'io';
+                return 'i';
             case '..cc':
                 return '栗鼠io';
             case '.c.c':
@@ -120,6 +118,12 @@ export class TestData {
                 return 'i栗o';
             case 'cc.':
                 return 'io栗';
+            case '..c':
+                return '栗鼠i';
+            case '.c.':
+                return '栗i鼠';
+            case 'c..':
+                return 'i栗鼠';
             default:
                 return 'AngelServal';
         }

@@ -93,9 +93,6 @@ test('F4: validation flags nicknames correctly', async t => {
     await p.submit();
     const f = p.toFormPage();
 
-    await f.setNickname(TestData.invalidNickname('too short'));
-    await f.verifyNicknameValidationState(false);
-
     await f.setNickname('');
     await f.setNickname(TestData.invalidNickname('too long'));
     await f.verifyNicknameValidationState(false);
@@ -150,6 +147,18 @@ test('F4: validation flags nicknames correctly', async t => {
 
     await f.setNickname('');
     await f.setNickname(TestData.validNickname('cc.'));
+    await f.verifyNicknameValidationState(true);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.validNickname('..c'));
+    await f.verifyNicknameValidationState(true);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.validNickname('.c.'));
+    await f.verifyNicknameValidationState(true);
+
+    await f.setNickname('');
+    await f.setNickname(TestData.validNickname('c..'));
     await f.verifyNicknameValidationState(true);
 });
 
