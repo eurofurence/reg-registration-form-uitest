@@ -13,6 +13,9 @@ All you need besides a clone of this repository is testcafe. Once [node.js](http
 npm install -g testcafe
 ```
 
+If you do not have permission to install globally, you can use `npm install testcafe` instead while in the
+project root, which will install it to `./node_modules`. 
+
 ### JetBrains WebStorm
 
 Alternatively, this repository includes a package.json, so opening the project in WebStorm should download its dependencies to
@@ -22,7 +25,13 @@ Alternatively, this repository includes a package.json, so opening the project i
 
 ### Command Line 
 
-You should simply be able to run a command like ```testcafe firefox src/main.js``` while inside this project.
+You should simply be able to run a command like 
+
+```testcafe firefox src/main.js```
+
+while inside this project. If you did not install testcafe globally, you'll need to run it with node:
+
+```node node_modules/testcafe/bin/testcafe.js firefox src/main.js```
 
 ### JetBrains WebStorm
 
