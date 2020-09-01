@@ -222,7 +222,9 @@ export class FormPage {
     async clickFlag(flag, expectedTargetState) {
         await this.t
             .click(this.fields.flags[flag])
-            .expect(this.fields.flags[flag].checked).eql(expectedTargetState);
+            .expect(
+                this.fields.flags[flag].checked
+            ).eql(expectedTargetState);
     }
 
     async setTelegram(value) {
@@ -251,7 +253,9 @@ export class FormPage {
     async clickOption(opt, expectedTargetState) {
         await this.t
             .click(this.fields.options[opt])
-            .expect(this.fields.options[opt].checked).eql(expectedTargetState);
+            .expect(
+                this.fields.options[opt].checked
+            ).eql(expectedTargetState);
     }
 
     async setComments(value) {
