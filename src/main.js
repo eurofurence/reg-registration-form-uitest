@@ -162,6 +162,42 @@ test('F4: validation flags nicknames correctly', async t => {
     await f.verifyNicknameValidationState(true);
 });
 
+test('F5: validation flags birthday correctly', async t => {
+    const p = new LandingPage(t);
+    await p.visit(pageUrl);
+    await p.submit();
+    const f = p.toFormPage();
+
+    await f.setBirthday('')
+    await f.setBirthday('1972-03-20')
+    await f.verifyBirthdayValidationState(true);
+
+    await f.setBirthday('')
+    await f.setBirthday('2002-08-19')
+    await f.verifyBirthdayValidationState(true);
+
+
+    await f.setBirthday('')
+    await f.setBirthday('2002-08-20')
+    await f.verifyBirthdayValidationState(false);
+
+    await f.setBirthday('')
+    await f.setBirthday('2000-06-31')
+    await f.verifyBirthdayValidationState(false);
+
+    await f.setBirthday('')
+    await f.setBirthday('08/16/2000')
+    await f.verifyBirthdayValidationState(false);
+
+    await f.setBirthday('')
+    await f.setBirthday('1860-01-14')
+    await f.verifyBirthdayValidationState(false);
+
+    await f.setBirthday('')
+    await f.setBirthday('2009-04-20')
+    await f.verifyBirthdayValidationState(false);
+});
+
 // tests for submit page
 
 test('S1: submit page shows long countdown when appropriate', async t => {

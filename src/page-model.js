@@ -117,6 +117,7 @@ export class FormPage {
             "city",
             "country",
             "countryBadge",
+            "birthday",
             "email",
             "emailRepeat",
             "phone",
@@ -203,7 +204,7 @@ export class FormPage {
     }
 
     async setBirthday(valueIso) {
-        await this.t.typeText(this.fields.birthday, valueIso);
+        await this._setTextValue(this.fields.birthday, valueIso);
     }
 
     async setGender(textValue, codeValue) {
@@ -281,6 +282,10 @@ export class FormPage {
 
     async verifyNicknameValidationState(isValid) {
         this._verifyValidationState(this.fields['nickname'], isValid);
+    }
+
+    async verifyBirthdayValidationState(isValid) {
+        this._verifyValidationState(this.fields['birthday'], isValid);
     }
 
     async _verifyValidationState(field, isValid) {
@@ -456,13 +461,13 @@ export class SubmitPage {
         await this.t
             .expect(this.labels.textCountdownError.getAttribute('class')).contains('hidden')
             .expect(this.labels.textCountdownShort.getAttribute('class')).contains('hidden')
-            .expect(this.labels.textCountdownLong.getAttribute('class')).eql(undefined);
+            .expect(this.labels.textCountdownLong.getAttribute('class')).eql(null);
     }
 
     async verifyShortCountdown() {
         await this.t
             .expect(this.labels.textCountdownError.getAttribute('class')).contains('hidden')
-            .expect(this.labels.textCountdownShort.getAttribute('class')).eql(undefined)
+            .expect(this.labels.textCountdownShort.getAttribute('class')).eql(null)
             .expect(this.labels.textCountdownLong.getAttribute('class')).contains('hidden');
     }
 
@@ -476,10 +481,12 @@ export class SubmitPage {
     async verifySubmitDisabled() {
         await this.t
             .expect(this.navs.submitButton.getAttribute('disabled')).notEql(undefined);
+        await this.t
+            .expect(this.navs.submitButton.getAttribute('disabled')).notEql(null);
     }
 
     async verifySubmitEnabled() {
         await this.t
-            .expect(this.navs.submitButton.getAttribute('disabled')).eql(undefined);
+            .expect(this.navs.submitButton.getAttribute('disabled')).eql(null);
     }
 }

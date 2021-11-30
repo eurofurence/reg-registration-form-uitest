@@ -39,7 +39,7 @@ export class TestData {
         await sp.verifyState('Mecklenburg-Vorpommern');
         await sp.verifyEmail('jsquirrel_github_9a6d@packetloss.de');
         await sp.verifyPhone('+49 12345 123456789');
-        await sp.verifyBirthday('08/19/2002');
+        await sp.verifyBirthday('19/08/2002');
         await sp.verifyGender('female');
         await sp.verifyTelegram('@Stickers');
         await sp.verifyPackages(["Entrance Fee", "Stage Ticket", "Sponsor Upgrade"], ["Supersponsor Upgrade"]);

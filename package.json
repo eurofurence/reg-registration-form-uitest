@@ -1,5 +1,5 @@
 {
   "devDependencies": {
-    "testcafe": "^1.8.8"
+    "testcafe": "^1.17.1"
   }
 }
