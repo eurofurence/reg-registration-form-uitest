@@ -12,9 +12,9 @@ var pageUrl = 'http://localhost:63343/reg-registration-form/';
 
 // adjust this to the configured go live time. Note that we are using timezone -1 so we don't have to urlencode
 // the + sign, so these times are relative to 2 hours BEFORE the configured go live time.
-var pageUrlAfter = pageUrl + '?currentTime=2020-01-04T18:00:00-01:00';
-var pageUrlShortBefore = pageUrl + '?currentTime=2020-01-04T17:30:00-01:00';
-var pageUrlLongBefore = pageUrl + '?currentTime=2020-01-04T16:30:00-01:00';
+var pageUrlAfter = pageUrl + '?currentTime=2022-01-29T18:00:00-01:00';
+var pageUrlShortBefore = pageUrl + '?currentTime=2022-01-29T17:30:00-01:00';
+var pageUrlLongBefore = pageUrl + '?currentTime=2022-01-29T16:30:00-01:00';
 
 fixture `Registration Form Tests`
     .page('about:blank');
@@ -173,12 +173,12 @@ test('F5: validation flags birthday correctly', async t => {
     await f.verifyBirthdayValidationState(true);
 
     await f.setBirthday('')
-    await f.setBirthday('2002-08-19')
+    await f.setBirthday('2004-08-24')
     await f.verifyBirthdayValidationState(true);
 
 
     await f.setBirthday('')
-    await f.setBirthday('2002-08-20')
+    await f.setBirthday('2004-08-25')
     await f.verifyBirthdayValidationState(false);
 
     await f.setBirthday('')
